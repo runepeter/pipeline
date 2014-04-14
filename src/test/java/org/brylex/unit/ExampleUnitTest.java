@@ -1,6 +1,6 @@
 package org.brylex.unit;
 
-import org.brylex.PingVerticle;
+import org.brylex.pipeline.PingVerticle;
 import org.junit.Test;
 
 /*

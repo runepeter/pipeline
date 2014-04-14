@@ -1,4 +1,4 @@
-package org.brylex;
+package org.brylex.pipeline;
 /*
  * Copyright 2013 Red Hat, Inc.
  *
@@ -26,18 +26,21 @@ This is a simple Java verticle which receives `ping` messages on the event bus a
  */
 public class PingVerticle extends Verticle {
 
-  public void start() {
+    @Override
+    public void start() {
 
+        container.logger().info("Starting PingVerticle...");
 
-    vertx.eventBus().registerHandler("ping-address", new Handler<Message<String>>() {
-      @Override
-      public void handle(Message<String> message) {
-        message.reply("pong!");
-        container.logger().info("Sent back pong");
-      }
-    });
+        getVertx().eventBus().registerHandler("job.event", new Handler<Message<String>>() {
+            @Override
+            public void handle(Message<String> message) {
+                System.err.println("Received message: [" + message + "].");
+                message.reply("pong!");
+                container.logger().info("Sent back pong");
+            }
+        });
 
-    container.logger().info("PingVerticle started");
+        container.logger().info("PingVerticle started");
 
-  }
+    }
 }
